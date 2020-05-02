@@ -79,7 +79,7 @@ class InventoryUITestsCS3260: XCTestCase {
             
             let buttons = cells.element(boundBy: i).buttons
             let button = buttons.element(boundBy: 0)
-            XCTAssert(button.label ==  "More Info", "Table entry \(i) disclosure button not found")
+            XCTAssert(button.label ==  "chevron", "Table entry \(i) disclosure button not found")
 
         }
     }
@@ -111,8 +111,10 @@ class InventoryUITestsCS3260: XCTestCase {
         
         let buttons = tableView.buttons
         XCTAssert(buttons.element(boundBy: 1).exists, "Second cell to be deleted not found")
-        
-        buttons.element(boundBy: 1).tap()
+        let button = buttons.element(boundBy: 1)
+        XCTAssert(button.label ==  "chevron", "Table entry 1 disclosure button not found")
+
+        button.forceTapElement()
         XCTAssert(app.navigationBars["Edit Item"].exists, "Screen not titled \"Edit Item\"")
         XCTAssert(app.navigationBars["Edit Item"].buttons["Inventory"].exists, "Inventory back button not found")
         XCTAssert(app.navigationBars["Edit Item"].buttons["Save"].exists, "Save button not found")
@@ -122,11 +124,13 @@ class InventoryUITestsCS3260: XCTestCase {
 
         let addedText = " more text added here"
         app.textFields["editShortDescription"].tap()
+        usleep(250000)  // now required with iOS 13
         app.textFields["editShortDescription"].tap()
         app.menuItems["Select All"].tap()
         app.menuItems["Cut"].tap()
         app.typeText(sampleItems[1].0 + addedText)
         app.textViews["editLongDescription"].tap()
+        usleep(250000)  // now required with iOS 13
         app.textViews["editLongDescription"].tap()
         app.menuItems["Select All"].tap()
         app.menuItems["Cut"].tap()
@@ -188,7 +192,7 @@ class InventoryUITestsCS3260: XCTestCase {
     }
     
     func testBackButtonDoesNotSave() {
-        var sampleItems = [("Item one", "This is item one"),
+        let sampleItems = [("Item one", "This is item one"),
                            ("Item two", "This is item two"),
                            ("Item three", "This is item three"),
                            ]
@@ -212,5 +216,19 @@ class InventoryUITestsCS3260: XCTestCase {
 
         let rowCount = tableView.cells.count
         XCTAssert(rowCount == 0, "Table should have no rows in it, but found \(rowCount)")
+    }
+    
+    
+}
+
+extension XCUIElement {
+    func forceTapElement() {
+        if self.isHittable {
+            self.tap()
+        }
+        else {
+            let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector(dx:0.0, dy:0.0))
+            coordinate.tap()
+        }
     }
 }
