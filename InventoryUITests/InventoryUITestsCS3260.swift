@@ -60,9 +60,9 @@ class InventoryUITestsCS3260: XCTestCase {
             XCTAssert(app.textViews["addLongDescription"].title == "", "addLongDescription is not empty on entry to Add New Item")
 
             app.textFields["addShortDescription"].tap()
-            app.typeText(sampleItems[i].0)
+            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
             app.textViews["addLongDescription"].tap()
-            app.typeText(sampleItems[i].1)
+            app.textViews["addLongDescription"].typeText(sampleItems[i].1)
             app.navigationBars["Add New Item"].buttons["Save"].tap()
         }
         let rowCount = tableView.cells.count
@@ -101,9 +101,9 @@ class InventoryUITestsCS3260: XCTestCase {
             XCTAssert(app.navigationBars["Add New Item"].buttons["Save"].exists, "Save button not found")
 
             app.textFields["addShortDescription"].tap()
-            app.typeText(sampleItems[i].0)
+            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
             app.textViews["addLongDescription"].tap()
-            app.typeText(sampleItems[i].1)
+            app.textViews["addLongDescription"].typeText(sampleItems[i].1)
             app.navigationBars["Add New Item"].buttons["Save"].tap()
         }
         let rowCount = tableView.cells.count
@@ -134,7 +134,7 @@ class InventoryUITestsCS3260: XCTestCase {
         app.textViews["editLongDescription"].tap()
         app.menuItems["Select All"].tap()
         app.menuItems["Cut"].tap()
-        app.typeText(sampleItems[1].1 + addedText)
+        app.textViews["editLongDescription"].typeText(sampleItems[1].1 + addedText)
         app.navigationBars["Edit Item"].buttons["Save"].tap()
 
         let cells = tableView.children(matching: .cell)
@@ -163,9 +163,9 @@ class InventoryUITestsCS3260: XCTestCase {
         for i in 0..<sampleItems.count {
             app.navigationBars["Inventory"].buttons["Add"].tap()
             app.textFields["addShortDescription"].tap()
-            app.typeText(sampleItems[i].0)
+            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
             app.textViews["addLongDescription"].tap()
-            app.typeText(sampleItems[i].1)
+            app.textViews["addLongDescription"].typeText(sampleItems[i].1)
             app.navigationBars["Add New Item"].buttons["Save"].tap()
         }
         var rowCount = tableView.cells.count
@@ -208,9 +208,9 @@ class InventoryUITestsCS3260: XCTestCase {
             XCTAssert(app.navigationBars["Add New Item"].buttons["Save"].exists, "Save button not found")
             
             app.textFields["addShortDescription"].tap()
-            app.typeText(sampleItems[i].0)
+            app.textFields["addShortDescription"].typeText(sampleItems[i].0)
             app.textViews["addLongDescription"].tap()
-            app.typeText(sampleItems[i].1)
+            app.textViews["addLongDescription"].typeText(sampleItems[i].1)
             app.navigationBars["Add New Item"].buttons["Inventory"].tap()
         }
 
