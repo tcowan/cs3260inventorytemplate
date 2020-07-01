@@ -61,8 +61,8 @@ class InventoryUITestsCS3260: XCTestCase {
 
             app.textFields["addShortDescription"].tap()
             app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews["addLongDescription"].tap()
-            app.textViews["addLongDescription"].typeText(sampleItems[i].1)
+            app.textViews.element.tap()
+            app.textViews.element.typeText(sampleItems[i].1)
             app.navigationBars["Add New Item"].buttons["Save"].tap()
         }
         let rowCount = tableView.cells.count
@@ -102,8 +102,8 @@ class InventoryUITestsCS3260: XCTestCase {
 
             app.textFields["addShortDescription"].tap()
             app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews["addLongDescription"].tap()
-            app.textViews["addLongDescription"].typeText(sampleItems[i].1)
+            app.textViews.element.tap()
+            app.textViews.element.typeText(sampleItems[i].1)
             app.navigationBars["Add New Item"].buttons["Save"].tap()
         }
         let rowCount = tableView.cells.count
@@ -164,8 +164,8 @@ class InventoryUITestsCS3260: XCTestCase {
             app.navigationBars["Inventory"].buttons["Add"].tap()
             app.textFields["addShortDescription"].tap()
             app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews["addLongDescription"].tap()
-            app.textViews["addLongDescription"].typeText(sampleItems[i].1)
+            app.textViews.element.tap()
+            app.textViews.element.typeText(sampleItems[i].1)
             app.navigationBars["Add New Item"].buttons["Save"].tap()
         }
         var rowCount = tableView.cells.count
@@ -209,8 +209,8 @@ class InventoryUITestsCS3260: XCTestCase {
             
             app.textFields["addShortDescription"].tap()
             app.textFields["addShortDescription"].typeText(sampleItems[i].0)
-            app.textViews["addLongDescription"].tap()
-            app.textViews["addLongDescription"].typeText(sampleItems[i].1)
+            app.textViews.element.tap()
+            app.textViews.element.typeText(sampleItems[i].1)
             app.navigationBars["Add New Item"].buttons["Inventory"].tap()
         }
 
