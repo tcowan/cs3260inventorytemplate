@@ -1,3 +1,4 @@
+//
 //  InventoryUITestsCS3260.swift
 //  InventoryUITests
 //
@@ -176,6 +177,7 @@ class InventoryUITestsCS3260: XCTestCase {
             UIPasteboard.general.string = items[i].1
             app.textViews.element.tap()
             app.textViews.element.doubleTap()
+            sleep(3)
             _ = app.menuItems.element(boundBy: 0).waitForExistence(timeout: 3)
             app.menuItems.element(boundBy: 0).tap()
             sleep(2)
