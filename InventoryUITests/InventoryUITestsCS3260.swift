@@ -176,11 +176,12 @@ class InventoryUITestsCS3260: XCTestCase {
             app.textFields["addShortDescription"].typeText(items[i].0)
             UIPasteboard.general.string = items[i].1
             app.textViews.element.tap()
-            app.textViews.element.doubleTap()
             sleep(3)
+            app.textViews.element.doubleTap()
+            sleep(4)
             _ = app.menuItems.element(boundBy: 0).waitForExistence(timeout: 3)
             app.menuItems.element(boundBy: 0).tap()
-            sleep(2)
+            sleep(4)
             if save == true {
                 _ = app.navigationBars["Add New Item"].buttons["Save"].waitForExistence(timeout: 2)
                 app.navigationBars["Add New Item"].buttons["Save"].tap()
