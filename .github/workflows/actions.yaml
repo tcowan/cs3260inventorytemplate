@@ -1,0 +1,14 @@
+name: Cowan CS 3260 Workflow
+on: [push]
+env:
+  LANG: "en_US.UTF-8"
+  LANGUAGE: "en_US:en"
+  LC_ALL: "en_US.UTF-8"
+
+jobs:
+  Test-CS3260:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - run: cs3260actions
+
