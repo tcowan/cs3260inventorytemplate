@@ -74,8 +74,6 @@ class InventoryUITestsCS3260: XCTestCase {
         let buttons = tableView.buttons
         XCTAssert(buttons.element(boundBy: 1).exists, "Second cell to be deleted not found")
         let button = buttons.element(boundBy: 1)
-//        XCTAssert(button.label ==  "chevron", "Table entry 1 disclosure button not found")
-
         button.forceTapElement()
         XCTAssert(app.navigationBars["Edit Item"].exists, "Screen not titled \"Edit Item\"")
         XCTAssert(app.navigationBars["Edit Item"].buttons["Cancel"].exists, "Inventory Edit Item \"Cancel\" button not found")
@@ -151,7 +149,7 @@ class InventoryUITestsCS3260: XCTestCase {
     }
     
     func testCancelButtonDoesNotSave() {
-        let oneItem = [("Item one", "This is item one")]
+        let oneItem = [("Item one temp", "This is item one temp")]
         var originalItems: [(String, String)] = []
         let list = app.tables.element(boundBy: 0)
         
@@ -165,11 +163,22 @@ class InventoryUITestsCS3260: XCTestCase {
             originalItems.append((shortDescription, longDescription))
         }
         addItems(items: oneItem, application: app, save: false)
+        _ = app.navigationBars["Add New Item"].buttons["Cancel"].waitForExistence(timeout: 2)
         app.navigationBars["Add New Item"].buttons["Cancel"].tap()
         
         // verify list did not change if Cancel button hit
         verifyList(items: originalItems, app: app)
-
+        
+        // test edit dialog cancel button
+        addItems(items: oneItem, application: app, save: true)
+        let buttons = list.buttons
+        XCTAssert(buttons.element(boundBy: 0).exists, "First cell to be edited not found")
+        let button = buttons.element(boundBy: 0)
+        button.forceTapElement()
+//        _ = app.navigationBars["Edit Item"].buttons["Cancel"].waitForExistence(timeout: 2)
+//        sleep(2)
+        app.navigationBars["Edit Item"].buttons["Cancel"].tap()
+        sleep(2)
     }
     
     func addItems(items:[(String,String)], application:XCUIApplication, save:Bool = true) {
