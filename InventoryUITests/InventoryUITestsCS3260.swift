@@ -248,6 +248,10 @@ extension XCUIElement {
     }
 }
 
+// July 6, 2022
+// Types one character at a time into a TextField, working around the problem of typing the entire string at once
+// whch causes dropped characters
+
 extension XCUIElement {
     func typeTextSlowly(_ str: String) {
         for char in str {
