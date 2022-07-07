@@ -5,6 +5,7 @@
 //  Created by Ted Cowan on 10/13/18.
 //  Copyright © 2018 Ted Cowan. All rights reserved.
 //
+//  Note to students: do not modify this file in any way
 
 import XCTest
 import SwiftUI
@@ -96,7 +97,7 @@ class InventoryUITestsCS3260: XCTestCase {
             app.textFields["editLongDescription"].tap()
             app.menuItems["Select All"].tap()
             app.menuItems["Cut"].tap()
-            app.textFields["editLongDescription"].typeText(testItems[1].1 + addedText)
+            app.textFields["editLongDescription"].typeTextSlowly(testItems[1].1 + addedText)
             let saveButton = app.navigationBars["Edit Item"].buttons["Save"]
             XCTAssertTrue(saveButton.exists, "No Save button on Navigation bar")
             sleep(2)
@@ -243,6 +244,15 @@ extension XCUIElement {
         else {
             let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector(dx:0.0, dy:0.0))
             coordinate.tap()
+        }
+    }
+}
+
+extension XCUIElement {
+    func typeTextSlowly(_ str: String) {
+        for char in str {
+            usleep(500000)
+            self.typeText(String(char))
         }
     }
 }
