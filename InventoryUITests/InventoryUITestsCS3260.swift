@@ -91,13 +91,13 @@ class InventoryUITestsCS3260: XCTestCase {
         if selectAll {
             app.menuItems["Select All"].tap()
             app.menuItems["Cut"].tap()
-            app.typeText(testItems[1].0 + addedText)
+            app.typeTextSlowly(testItems[1].0 + addedText)
             app.textFields["editLongDescription"].tap()
             usleep(250000)  // now required with iOS 13
             app.textFields["editLongDescription"].tap()
             app.menuItems["Select All"].tap()
             app.menuItems["Cut"].tap()
-            app.textFields["editLongDescription"].typeText(testItems[1].1 + addedText)
+            app.textFields["editLongDescription"].typeTextSlowly(testItems[1].1 + addedText)
             let saveButton = app.navigationBars["Edit Item"].buttons["Save"]
             XCTAssertTrue(saveButton.exists, "No Save button on Navigation bar")
             sleep(2)
@@ -199,24 +199,26 @@ class InventoryUITestsCS3260: XCTestCase {
             XCTAssert(app.textFields["addShortDescription"].title == "", "addShortDescription is not empty on entry to Add New Item")
             XCTAssert(app.textFields["addLongDescription"].title == "", "addLongDescription is not empty on entry to Add New Item")
 
-            //app.textFields["addShortDescription"].tap()
-            //app.textFields["addShortDescription"].typeText(items[i].0)
-            UIPasteboard.general.string = items[i].0
             app.textFields["addShortDescription"].tap()
-            sleep(1)
-            app.textFields["addShortDescription"].doubleTap()
-            sleep(1)
-            _ = app.menuItems.element(boundBy: 0).waitForExistence(timeout: 3)
-            app.menuItems.element(boundBy: 0).tap()
+            app.textFields["addShortDescription"].typeTextSlowly(items[i].0)
+            // UIPasteboard.general.string = items[i].0
+            // app.textFields["addShortDescription"].tap()
+            // sleep(1)
+            // app.textFields["addShortDescription"].doubleTap()
+            // sleep(1)
+            // _ = app.menuItems.element(boundBy: 0).waitForExistence(timeout: 3)
+            // app.menuItems.element(boundBy: 0).tap()
 
-            UIPasteboard.general.string = items[i].1
             app.textFields["addLongDescription"].tap()
-            sleep(1)
-            app.textFields["addLongDescription"].doubleTap()
-            sleep(1)
-            _ = app.menuItems.element(boundBy: 0).waitForExistence(timeout: 3)
-            app.menuItems.element(boundBy: 0).tap()
-            sleep(2)
+            app.textFields["addLongDescription"].typeTextSlowly(items[i].1)
+            // UIPasteboard.general.string = items[i].1
+            // app.textFields["addLongDescription"].tap()
+            // sleep(1)
+            // app.textFields["addLongDescription"].doubleTap()
+            // sleep(1)
+            // _ = app.menuItems.element(boundBy: 0).waitForExistence(timeout: 3)
+            // app.menuItems.element(boundBy: 0).tap()
+            // sleep(2)
             if save == true {
                 _ = app.navigationBars["Add New Item"].buttons["Save"].waitForExistence(timeout: 2)
                 app.navigationBars["Add New Item"].buttons["Save"].tap()
@@ -256,5 +258,23 @@ extension XCUIElement {
             let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector(dx:0.0, dy:0.0))
             coordinate.tap()
         }
+    }
+}
+
+// July 14, 2023
+// Types one character at a time into a TextField, working around the problem of
+//    typing the entire string at once which causes dropped characters
+//
+// This extenstion was first created in July 2022 for Inventory2 and now we
+//    need it for Inventory.  I lowered the usleep from 0.5 to 0.25 seconds and
+//    added a 0.25 second sleep at the end of the loop
+
+extension XCUIElement {
+    func typeTextSlowly(_ str: String) {
+        for char in str {
+            usleep(50000)
+            self.typeText(String(char))
+        }
+        usleep(50000)
     }
 }
